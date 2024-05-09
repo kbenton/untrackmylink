@@ -1,0 +1,19 @@
+{
+    "manifest_version": 2,
+    "name": "Context menu: Copy sub-URL",
+    "description": "Add a context menu option to links to find URLs embedded within the link, extract them, and copy to the clipboard. Primarily useful for stripping tracking URLs that directly embed the actual target. (Adapted pretty directly from the MDN copy-links-with-types example.)",
+    "version": "1.0",
+    "homepage_url": "https://github.com/kbenton",
+
+    "background": {
+        "scripts": [
+            "background.js"
+        ],
+        "persistent": false
+    },
+
+    "permissions": [
+        "activeTab",
+        "contextMenus"
+    ]
+}

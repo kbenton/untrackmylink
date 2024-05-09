@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Untrack My Link</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h2>Untrack My Link</h2>
+
+        <form id="getUrl">
+            <input type="text" id="badurl" name="badurl" style="width:80%;"><br />
+            <button type="submit">Untrack it</button>
+        </form>
+        <p>
+            <div id="suburl"></div>
+        </p>
+
+        <div id="what">
+            <h3>What is this?</h3>
+            <p>It's a simple one-page html and js to try and get the real link embedded in another link that's been URL encoded and/or 
+            contains a bunch of tracking variables. It only decodes the submitted text and looks for substrings that appear to be 
+            proper URLs, it never follows or executes the submitted string, so the source of the tracking won't know it was followed. 
+            I'd love this  fucntionality to be built into browsers, but until then, this is simple and verifiable.</p> 
+            
+            <h3>Notes</h3>
+            <ol>
+                <li>You can also use it as a bookmarklet with the parameter ?badurl=</li>
+                <li>Perhaps needless to say, but, this won't work on tracking URLs that rely on a server redirect based on a unique id
+                    e.g. of the form https://some.newslet.tr/?trid=1971722365764871763  The only way to get the actual destination of that
+                    type of link is to actually follow it, which defeats the purpose of preventing the sender from knowing you clicked it.
+                </li>
+                <li>This page is entirely self-contained, loads no external resources and contains nothing 
+                    sneaky or malicious. You can put a copy on your site, or save and run it locally on your system. Please do view 
+                    the source. 
+                </li>
+                <li>Speaking of the source, this is a real quick and dirty attempt in about 10 lines of javascript. I'm sure it can 
+                    be improved a lot, but I don't want to improve it so much that it becomes illegible in a quick scan of the source.
+                    That said, feel free to take it and fancy it up all you like. I'd love to know how and how much it's being used, but 
+                    no obligation.
+                </li>
+        </div>
+        <script type="text/javascript">
+            const form = document.getElementById("getUrl")
+            form.addEventListener('submit', function(event) {
+                event.preventDefault()
+                let url = document.getElementById("badurl").value
+                let durl = decodeURIComponent(url)
+                let suburl = durl.slice(1);
+                suburl = suburl.match(/https?:\/\/[^\s]+/)[0];
+                suburl = suburl.match(/.+?(?=\?)/)[0];
+                document.getElementById("suburl").innerHTML = "<p><a href=\"" + suburl + "\">" + suburl + "</a></p>"          
+            })
+        </script>
+    </body>
+</html>
