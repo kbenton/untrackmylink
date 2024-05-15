@@ -24,9 +24,9 @@
         <div id="what">
             <h3>What is this?</h3>
             <p>It's a simple utility to try and get the real link embedded in another link that's been URL encoded and 
-            festooned with a bunch of tracking variables. These are links that look like <mark>https://tracking.newslet.tr/url/https:%2F%2Fwww.site.com%2Fposts%2Fsome-cool-article%3trk_source=newslettr/417d2dd8-e2f7-47fa-b4da-ed8c54fba949/jKLHueeha37ahH35Khhwy6Lllq</mark>
+            festooned with a bunch of tracking variables. These are links that look like <mark>https://tracking.newslet.tr/url/https:%2F%2Fwww.example.com%2Fposts%2Fsome-cool-article%3trk_source=newslettr/417d2dd8-e2f7-47fa-b4da-ed8c54fba949/jKLHueeha37ahH35Khhwy6Lllq</mark>
             </p> 
-            <p>After decoding and stripping, you'd get <mark>https://www.site.com/posts/some-cool-article</mark> which is presumably
+            <p>After decoding and stripping, you'd get <mark>https://www.example.com/posts/some-cool-article</mark> which is presumably
             the <em>actual</em> page you want to visit.</p>
             
             <h3>What's in it?</h3>
@@ -69,9 +69,11 @@
                 let suburl = durl.slice(1);
                 suburl = suburl.match(/https?:\/\/[^\s]+/)[0];
                 suburl = suburl.match(/.+?(?=\?)/)[0];
-                document.getElementById("suburl").innerHTML = "<a href=\"" + suburl + "\">" + suburl + "</a><br /><br />(<small>" + url + "<small>)";    
+                document.getElementById("suburl").innerHTML = "<a href=\"" + suburl + "\">" + suburl + "</a><br /><br />(<small>" + url + "<small>)";
                 document.getElementById("badurl").value = ""      
             })
+
+            //todo?: add code to toggle visibility of the what div?
         </script>
     </body>
 </html>
