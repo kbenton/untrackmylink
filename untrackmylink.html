@@ -16,10 +16,12 @@
 
         <form id="getUrl">
             <input type="text" id="badurl" name="badurl" style="width: 100%;"><br />
-            <button type="submit">Untrack it</button>
+            <button type="submit" id="untrack" >Untrack it</button>
+            <button type="button" id="untrackopen" >Untrack & open</button><br />
         </form>
         
         <div id="suburl"></div>
+        <div id="suburlraw" style="display:none;"></div>
 
         <div id="what">
             <h3>What is this?</h3>
@@ -46,9 +48,6 @@
             <h3>Todo?</h3>
             <ul>
                 <li><strong>Let the page accept the input link as a parameter?</strong></li>
-                <li><strong>Add a 'Untrack and go' button?</strong>
-                    <ul><li>Skip the extra click and just open the decoded link?</li></ul>
-                </li>
                 <li><strong>Make it a bookmarklet?</strong></li>
                 <li><strong>Make it a browser plugin?</strong> 
                     <ul><li>This was the initial plan... to allow me to right click a link and see the "untracked" version and then open it on click. The 
@@ -62,16 +61,30 @@
         </footer>
         <script type="text/javascript">
             const form = document.getElementById("getUrl");
+
+            function processUrl() {
+				let url = document.getElementById("badurl").value;
+				let durl = decodeURIComponent(url);
+				let suburl = durl.slice(1);
+				suburl = suburl.match(/https?:\/\/[^\s]+/)[0];
+				suburl = suburl.match(/.+?(?=\?)/)[0];
+				document.getElementById("suburl").innerHTML = "<a href=\"" + suburl + "\">" + suburl + "</a><br /><br />(<small>" + url + "<small>)";
+				document.getElementById("badurl").value = "";
+
+				document.getElementById("suburlraw").innerHTML = suburl;
+            };
+            
             form.addEventListener('submit', function(event) {
-                event.preventDefault()
-                let url = document.getElementById("badurl").value
-                let durl = decodeURIComponent(url)
-                let suburl = durl.slice(1);
-                suburl = suburl.match(/https?:\/\/[^\s]+/)[0];
-                suburl = suburl.match(/.+?(?=\?)/)[0];
-                document.getElementById("suburl").innerHTML = "<a href=\"" + suburl + "\">" + suburl + "</a><br /><br />(<small>" + url + "<small>)";
-                document.getElementById("badurl").value = ""      
-            })
+                event.preventDefault();
+                processUrl();
+            });
+
+            document.getElementById('untrackopen').onclick = function(event) {
+				event.preventDefault();
+            	processUrl();                              // replace these two lines with form.submit()?
+            	var finalurl = document.getElementById("suburlraw").innerHTML;
+            	window.open(finalurl).focus();	 
+            };
 
             //todo?: add code to toggle visibility of the what div?
         </script>
