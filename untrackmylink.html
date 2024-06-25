@@ -59,10 +59,10 @@
         <footer>
             2024 - Kerry Benton - <a href="https://github.com/kbenton/untrackmylink">Github</a>
         </footer>
-        <script type="text/javascript">
+ 		<script type="text/javascript">
             const form = document.getElementById("getUrl");
 
-            function processUrl() {
+			function processUrl() {
 				let url = document.getElementById("badurl").value;
 				let durl = decodeURIComponent(url);
 				let suburl = durl.slice(1);
@@ -72,21 +72,20 @@
 				document.getElementById("badurl").value = "";
 
 				document.getElementById("suburlraw").innerHTML = suburl;
-            };
+			};
             
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
-                processUrl();
-            });
-
-            document.getElementById('untrackopen').onclick = function(event) {
+			form.addEventListener('submit', function(event) {
 				event.preventDefault();
-            	processUrl();                              // replace these two lines with form.submit()?
-            	var finalurl = document.getElementById("suburlraw").innerHTML;
-            	window.open(finalurl).focus();	 
-            };
+				processUrl();
+			});
 
-            //todo?: add code to toggle visibility of the what div?
-        </script>
-    </body>
+			document.getElementById('untrackopen').onclick = function(event) {
+				event.preventDefault();
+				processUrl();                              // replace these two lines with form.submit()?
+				var finalurl = document.getElementById("suburlraw").innerHTML;
+				window.open(finalurl).focus();	 
+			};
+			//todo?: add code to toggle visibility of the what div?
+		</script>
+	</body>
 </html>
